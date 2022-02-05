@@ -1,11 +1,14 @@
-import React from 'react';
-import './App.css';
+import GlobalStyle from './styles/global';
+import NavBar from './components/NavBar';
+import Board from './components/Board';
 
 function App() {
   return (
-    <div className="App">
-      하이루
-    </div>
+    <>
+      <GlobalStyle />
+      <NavBar />
+      <Board />
+    </>
   );
 }
 
