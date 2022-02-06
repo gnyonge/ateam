@@ -10,8 +10,11 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 `
-export const List = styled.div`
+export const List = styled.div<{len: number}>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => props.len % 3 === 2 ? 'flex-start' : 'space-between'};
   flex-wrap: wrap;
+  @media screen and (max-width: 1200px) {
+    justify-content: space-between;
+}
 `

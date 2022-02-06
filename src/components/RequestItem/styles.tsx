@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export const Container = styled.div`
+export const Container = styled.div<{len: number}>`
   border: #E5E5E5 solid 1px;
   border-radius: 4px;
   font-size: 14px;
@@ -7,11 +7,15 @@ export const Container = styled.div`
   height: 356px;
   padding: 24px 16px;
   margin-bottom: 16px;
+  margin-right: ${props => props.len % 3 === 2 ? '16px' : 0};
   :hover {
     outline: 2px solid #2196F3;
     outline-offset: -3px;
     border: #FFFFFF solid 1px;;
   }
+  @media screen and (max-width: 1200px) {
+    margin-right: 0;
+}
   @media screen and (max-width: 900px) {
     width: 320px;
 }

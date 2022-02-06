@@ -28,24 +28,38 @@ export const SideBar = styled.div<{ isClicked: boolean }>`
   background-color: white;
   top: 0;
   left: ${props => props.isClicked ? '0' : '-280px'};
-  /* z-index: 2; */
+  z-index: 999;
   transition: all .3s;
+  :hover {
+    cursor: default;
+  }
 `
 export const SideBarBox = styled.div<{ isClicked: boolean }>`
-  /* display: ${props => props.isClicked ? 'block' : 'none'}; */
+  display: ${props => props.isClicked ? 'block' : 'none'};
   position: fixed;
   top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: ${props => props.isClicked ? 'rgba(0, 0, 0, 0.5)' : 'null'};
-  /* z-index: ${props => props.isClicked ? '1' : '0'}; */
+  width: 100%;
+  height: 100%;
+  z-index: 998;
+  background-color: ${props => props.isClicked ? 'rgba(0, 0, 0, 0.5)' : 'none'};
+  :hover {
+    cursor: default;
+  }
+`
+export const SideMenu = styled.div`
+  padding: 30px 34px;
+  p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `
 export const Company = styled.div`
   font-size: 20px;
-  color: white;
+  color: ${props => props.color ? props.color: 'white'};
   @media screen and (max-width: 900px) {
     font-size: 12px;
+    padding: ${props => props.color ? '15px 25px' : 0};
+    border-bottom: ${props => props.color ? 'solid 1px #E5E5E5' : null}
 }
 `
 export const MenuBox = styled.div`

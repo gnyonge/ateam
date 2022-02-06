@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Container, List } from './styles';
 import RequestItem from '../RequestItem';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData, setRequests } from '../../reducers/request';
+import { RootState } from '../../reducers'
 
 export interface IRequest {
   id: number;
@@ -17,28 +20,36 @@ export interface IRequest {
 }
 const RequestList = () => {
   
-  const [requests, setRequests] = useState<IRequest[]>([])
-  console.log(requests)
+  const all = useSelector((state: RootState) => state.request.requests)
+  const toggled = useSelector((state: RootState) => state.request.toggled)
+
+  const dispatch = useDispatch();
+
+  const fetchData = async () => {
+    const fetchedData = await axios.get<IRequest[]>('http://localhost:3001/requests')
+    if (toggled) {
+      dispatch(setRequests(all))
+    } else {
+      dispatch(setData(fetchedData.data)) 
+    }
+  }
   useEffect(() => {
-    axios.get<IRequest[]>('http://localhost:3001/requests')
-    .then((res) => {
-      setRequests(res.data)
-    })
+    fetchData()
   }, [])
   return (
     <>
     {
-      requests.length !== 0
+      all === undefined || all.length === 0
       ? 
-      <List>
-        {
-          requests.map(request => <RequestItem key={request.id} request={request}/>)
-        }
-      </List>
-      :
       <Container>
         조건에 맞는 견적 요청이 없습니다.
       </Container>
+      :
+      <List len={all.length}>
+        {
+          all.map(request => <RequestItem key={request.id} request={request}/>)
+        }
+      </List>
     }
     </>
   )

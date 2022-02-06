@@ -2,14 +2,19 @@ import { Container, Title, Client, Due, DetailBox, DetailTitle, DetailContent,
   DetailList, TitleBox, StatusButton, ButtonBox } from './styles';
 import { IRequest } from '../RequestList';
 import DetailButton from '../DetailButton';
+import { RootState } from '../../reducers'
+import { useSelector } from 'react-redux';
+
 
 interface RequestProps {
   request: IRequest
 }
 
 const RequestItem = ({ request }: RequestProps) => {
+  const all = useSelector((state: RootState) => state.request.requests)
+
   return (
-    <Container>
+    <Container len={all.length}>
       <TitleBox>
         <Title>
           {request.title}
@@ -24,12 +29,8 @@ const RequestItem = ({ request }: RequestProps) => {
           null
         }
       </TitleBox>
-      <Client>
-        {request.client}
-      </Client>
-      <Due>
-        {request.due}까지 납기
-      </Due>
+      <Client>{request.client}</Client>
+      <Due>{request.due}까지 납기</Due>
       <DetailBox>
         <DetailTitle>
           <p>도면개수</p>

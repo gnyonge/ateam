@@ -2,8 +2,24 @@ import { Container, BoardBox, InfoTitle, InfoDesc, FilterBox, DropdownBox } from
 import Dropdown from '../Dropdown';
 import Toggle from '../Toggle';
 import RequestList from '../RequestList';
+import Reset from '../Reset';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers'
 
 const Board = () => {
+  const methods: string[] = [
+    '밀링',
+    '선반'
+  ]
+  const materials: string[] = [
+    '알루미늄',
+    '탄소강',
+    '구리',
+    '합금강',
+    '강철'
+  ]
+  const method = useSelector((state: RootState) => state.request.method)
+  const material = useSelector((state: RootState) => state.request.material)
   return (
     <Container>
       <BoardBox>
@@ -15,8 +31,15 @@ const Board = () => {
         </InfoDesc>
         <FilterBox>
           <DropdownBox>
-            <Dropdown />
-            <Dropdown />
+            <Dropdown menu={methods} title='가공방식'/>
+            <Dropdown menu={materials} title='재료'/>
+            {
+              method.length !== 0 || material.length !== 0
+              ?
+              <Reset />
+              :
+              null
+            }
           </DropdownBox>
           <Toggle />
         </FilterBox>
